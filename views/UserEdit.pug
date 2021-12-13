@@ -1,0 +1,42 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="/style.css")
+        title= title 
+    body 
+        center 
+            form(action="/user/edit", method="post", enctype="multipart/form-data")
+                input(type="hidden", name="id", value=`${List._id}`)
+                table 
+                    tr 
+                        th Name 
+                        td 
+                            input(type="text", name="name" value=`${List.name}`)
+                    tr 
+                        th Image  
+                        td 
+                            input(type="file", name="image")
+                    tr 
+                        th Gender  
+                        td   
+                            if List.gender == "male"
+                                input(type="radio", name="gender", value="male" id="male" checked) 
+                            else 
+                                input(type="radio", name="gender", value="male" id="male") 
+                            label(for="male") Male  
+                            if List.gender == "female"
+                                input(type="radio", name="gender", value="female" id="female" checked)
+                            else 
+                                input(type="radio", name="gender", value="female" id="female")
+                            label(for="female") Female
+                    tr 
+                        th Age  
+                        td 
+                            input(type="text", name="age", value=`${List.age}`)
+                    tr 
+                        td 
+                        td 
+                            input(type="submit", value="Update") 

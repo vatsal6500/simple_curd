@@ -1,0 +1,35 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="style.css")
+        title= title   
+    body 
+        center 
+            a(href="/user/add") Add New 
+            br
+            br
+            if error == true 
+                span= DNF 
+            p
+            table
+                tr 
+                    th Name
+                    th Photo  
+                    th Gender 
+                    th Age
+                    th Action 
+                if data == true 
+                    for book in bookList 
+                        tr 
+                            td= book.name 
+                            td 
+                                img(src=`/image/${book.photo}`, alt="image not found" style="width:100px; height:100px")
+                            td= book.gender 
+                            td= book.age 
+                            td
+                                a(href=`/user/delete/${book._id}`) Delete |
+                                a(href=`/user/${book._id}`) edit 
+
