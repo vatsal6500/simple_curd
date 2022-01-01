@@ -19,11 +19,11 @@ router.get('/', (req,res) => {
     User.find()
     .then((data) => {
         if(data < 2) return res.render("UserList",{DNF:"Data Not Found", error:true}) //res.send("Data Not Available");
-        //res.send(data);
-        res.render("UserList",{title:`${data[0].name}`,bookList:data, data:true});
+        res.json(data);
+        //res.render("UserList",{title:`${data[0].name}`,bookList:data, data:true});
     })
     .catch((err) => {
-        res.send(`Interal error ${err}`);
+        res.json(`Interal error ${err}`);
     })
 });
 
@@ -31,18 +31,18 @@ router.get('/add', (req,res) => {
     res.render('UserAdd',{title:"User Add"});
 });
 
-router.post('/add', upload, (req,res) => {
-    //let user = new User(req.body);
-    let user = new User({
-        name : req.body.name,         //both will work
-        gender : req.body.gender,
-        age : req.body.age,
-        photo : req.file.filename
-    });
+router.post('/add', (req,res) => {
+    let user = new User(req.body);
+    // let user = new User({
+    //     name : req.body.name,         //both will work
+    //     gender : req.body.gender,
+    //     age : req.body.age,
+    //     photo : req.file.filename
+    // });
     user.save()
     .then((data) => {
-        //res.send(data);
-        res.redirect('/user')
+        res.json(data);
+        //res.redirect('/user')
     })
     .catch((err) => {
         res.send("Internal server error");
@@ -54,8 +54,8 @@ router.get('/:id', (req,res) => {
     //User.findById(ID)
     User.findById({"_id":ID})   //both will work
     .then((data) => {
-        //res.send(data);
-        res.render('UserEdit',{title:"User Edit",List:data});
+        res.jsonp(data);
+        //res.render('UserEdit',{title:"User Edit",List:data});
     })
     .catch((error) => {
         res.send("User not found");
