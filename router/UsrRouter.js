@@ -18,7 +18,7 @@ const upload = multer({
 router.get('/', (req,res) => {
     User.find()
     .then((data) => {
-        if(data < 2) return res.render("UserList",{DNF:"Data Not Found", error:true}) //res.send("Data Not Available");
+        //if(data < 2) return res.render("UserList",{DNF:"Data Not Found", error:true}) //res.send("Data Not Available");
         res.json(data);
         //res.render("UserList",{title:`${data[0].name}`,bookList:data, data:true});
     })
@@ -54,7 +54,7 @@ router.get('/:id', (req,res) => {
     //User.findById(ID)
     User.findById({"_id":ID})   //both will work
     .then((data) => {
-        res.jsonp(data);
+        res.json(data);
         //res.render('UserEdit',{title:"User Edit",List:data});
     })
     .catch((error) => {
@@ -63,7 +63,7 @@ router.get('/:id', (req,res) => {
 });
 
 
-router.post('/edit', upload, (req,res) => {
+router.put('/edit/:id', (req,res) => {
 
     if(req.file){
         let dataBody = {
@@ -91,10 +91,11 @@ router.post('/edit', upload, (req,res) => {
         }
 
         //User.findByIdAndUpdate({"_id" : req.body.id},req.body,{new:true})
-        User.findByIdAndUpdate(req.body.id,dataBody,{new:true}).lean()    //^both will work
+        User.findByIdAndUpdate(req.params.id,dataBody,{new:true}).lean()    //^both will work
         .then((data) => {
             //res.send(`User with ${data._id} ID Updated`);
-            res.redirect('/user');
+            //res.redirect('/user');
+            res.send(data);
         })
         .catch((err) => {
             res.send(`Data not updated ${err}`);
@@ -107,13 +108,22 @@ router.get('/delete/:id', (req,res) => {
 
     let ID = req.params.id;
 
+    // User.deleteOne({"_id":ID})
+    // .then(data => {
+    //     res.send("Data deleted");
+    // })
+    // .catch(err => {
+    //     res.send(err);
+    // })
+
     User.findByIdAndDelete(ID)
     .then((data) => {
         //res.send(`${data.name} is deleted`);
         res.redirect('/user');
     })
     .catch((err) => {
-        res.send("Data not found");
+        //res.send("Data not found");
+        res.redirect('/user');
     })
 })
 
