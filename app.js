@@ -7,7 +7,7 @@ const cors = require('cors');
 // pug engine view setup
 app.set('view engine','pug');
 
-//middlewares
+//middlewares vatsal
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(express.static("public"));
