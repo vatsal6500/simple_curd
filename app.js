@@ -4,6 +4,7 @@ const app = express();
 const UsrRouter = require("./router/UsrRouter");
 const cors = require('cors');
 
+// pug engine view setup
 app.set('view engine','pug');
 
 //middlewares
